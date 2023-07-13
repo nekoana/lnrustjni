@@ -27,6 +27,14 @@ pub extern "system" fn Java_jjni_JniCall_incCountFromJni(mut env: JNIEnv, _: JCl
 }
 
 #[no_mangle]
+pub extern "system" fn Java_jjni_JniCall_callIncCountFromJni(
+    mut env: JNIEnv,
+    obj: JObject,
+) {
+     env.call_method(obj, "incCount", "()V", &[]).expect("Can't call method");
+}
+
+#[no_mangle]
 pub extern "system" fn Java_jjni_JniCall_getUserFromJni<'a>(
     mut env: JNIEnv<'a>,
     _: JClass<'a>,
@@ -39,6 +47,6 @@ pub extern "system" fn Java_jjni_JniCall_getUserFromJni<'a>(
     let user = env
         .new_object(class, "(Ljava/lang/String;)V", &[JValue::Object(&alice)])
         .expect("Can't create object");
- 
+
     user
 }
