@@ -13,6 +13,4 @@ object App {
 
 fun main() {
     println(App.helloJni())
-    
-    println(PrimitiveTypes.getBoolean())
 }
