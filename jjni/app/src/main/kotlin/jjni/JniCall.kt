@@ -11,6 +11,7 @@ object JniCall {
 
     external fun incCountFromJni()
     external fun callIncCountFromJni()
+    external fun readUserFromJni(user: User)
     private external fun getUserFromJni(): User
 
     fun incCount() {

@@ -1,4 +1,4 @@
-use jni::objects::{JClass, JObject, JValue};
+use jni::objects::{JClass, JObject, JString, JValue};
 use jni::signature::Primitive;
 use jni::JNIEnv;
 
@@ -53,4 +53,21 @@ pub extern "system" fn Java_jjni_JniCall_getUserFromJni<'a>(
         .expect("Can't create object");
 
     user
+}
+
+#[no_mangle]
+pub extern "system" fn Java_jjni_JniCall_readUserFromJni(
+    mut env: JNIEnv,
+    _obj: JObject,
+    user: JObject,
+) {
+    let field = env
+        .get_field(user, "name", "Ljava/lang/String;")
+        .expect("Can't get field");
+    let val = field.l().expect("Can't convert to string");
+
+    let val = JString::from(val);
+    let val = env.get_string(&val).expect("Can't convert to string");
+    let val = val.to_str().expect("Can't convert to str");
+    println!("name: {}", val);
 }

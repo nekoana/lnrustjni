@@ -1,4 +1,5 @@
 import jjni.JniCall
+import jjni.User
 import kotlin.test.*
 
 class JniCallTest {
@@ -29,5 +30,11 @@ class JniCallTest {
     @Test
     fun testCallSayHiFromJni(){
         jniCall.callSayHiFromJni()
+    }
+    
+    @Test
+    fun testReadUserFromJni() {
+        val user= User("Alice")
+        jniCall.readUserFromJni(user)
     }
 }
