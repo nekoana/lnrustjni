@@ -27,11 +27,15 @@ pub extern "system" fn Java_jjni_JniCall_incCountFromJni(mut env: JNIEnv, _: JCl
 }
 
 #[no_mangle]
-pub extern "system" fn Java_jjni_JniCall_callIncCountFromJni(
-    mut env: JNIEnv,
-    obj: JObject,
-) {
-     env.call_method(obj, "incCount", "()V", &[]).expect("Can't call method");
+pub extern "system" fn Java_jjni_JniCall_callIncCountFromJni(mut env: JNIEnv, obj: JObject) {
+    env.call_method(obj, "incCount", "()V", &[])
+        .expect("Can't call method");
+}
+
+#[no_mangle]
+pub extern "system" fn Java_jjni_JniCall_callSayHiFromJni(mut env: JNIEnv, class: JClass) {
+    env.call_static_method(class, "sayHi", "()V", &[])
+        .expect("Can't call method");
 }
 
 #[no_mangle]

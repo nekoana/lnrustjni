@@ -25,4 +25,9 @@ class JniCallTest {
         jniCall.callIncCountFromJni()
         assertEquals(1,jniCall.count)
     }
+
+    @Test
+    fun testCallSayHiFromJni(){
+        jniCall.callSayHiFromJni()
+    }
 }

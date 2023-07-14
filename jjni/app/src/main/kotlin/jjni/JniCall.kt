@@ -17,6 +17,15 @@ object JniCall {
         incCountFromJni()
     }
 
+    @JvmStatic
+    fun sayHi() {
+        println("Hi Jni!!!!")
+    }
+
+    @JvmStatic
+    external fun callSayHiFromJni()
+
 }
+
 
 data class User(var name: String)
