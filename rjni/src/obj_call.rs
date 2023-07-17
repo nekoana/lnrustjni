@@ -1,5 +1,8 @@
+use std::fmt::format;
+
 use jni::objects::{JClass, JObject, JString, JValue};
 use jni::signature::Primitive;
+use jni::sys::{jboolean, JNI_TRUE};
 use jni::JNIEnv;
 
 #[no_mangle]
@@ -70,4 +73,50 @@ pub extern "system" fn Java_jjni_JniCall_readUserFromJni(
     let val = env.get_string(&val).expect("Can't convert to string");
     let val = val.to_str().expect("Can't convert to str");
     println!("name: {}", val);
+}
+
+#[no_mangle]
+pub extern "system" fn Java_jjni_JniCall_setUserFromJni(mut env: JNIEnv, obj: JObject) -> jboolean {
+    //获取class
+    let class = env.get_object_class(&obj).expect("Can't get class");
+    //创建Java字符串
+    let name = env.new_string("Alice").expect("Can't create java string");
+    //调用Java Static方法创建User对象
+    let user = env
+        .call_static_method(
+            class,
+            "createUser",
+            "(Ljava/lang/String;)Ljjni/User;",
+            &[JValue::Object(&name)],
+        )
+        .expect("Can't call method");
+    //转换为User对象
+    let user = user.l().expect("Can't convert to object");
+    //获取User对象name字段
+    let name = env
+        .call_method(&user, "getName", "()Ljava/lang/String;", &[])
+        .expect("Can't call method");
+    let name = name.l().expect("Can't convert to string");
+    //转换为String
+    let name = JString::from(name);
+    let name = env.get_string(&name).expect("Can't convert to string");
+    let name = name.to_str().expect("Can't convert to str");
+    println!("name: {}", name);
+    //添加后缀From JNI !!
+    let name = format!("{} From JNI !!", name);
+    //转换为Java String
+    let name = env.new_string(name).expect("Can't create java string");
+    //调用User对象的setName方法
+    env.call_method(
+        &user,
+        "setName",
+        "(Ljava/lang/String;)V",
+        &[JValue::Object(&name)],
+    )
+    .expect("Can't call method");
+
+    env.call_method(&obj, "setUser", "(Ljjni/User;)V", &[JValue::Object(&user)])
+        .expect("Can't call method");
+
+    JNI_TRUE
 }

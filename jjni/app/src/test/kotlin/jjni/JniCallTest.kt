@@ -9,32 +9,14 @@ class JniCallTest {
     fun setUp() {
         jniCall = JniCall
     }
-    
-    @Test
-    fun testInvCountFromJni() {
-        jniCall.incCountFromJni()
-        assertEquals(jniCall.count,1)
-    }
-    
-    @Test
-    fun testGetUserFromJni() {
-        assertEquals("Alice",jniCall.user.name)
-    }
 
     @Test
-    fun testCallIncCountFromJni(){
-        jniCall.callIncCountFromJni()
-        assertEquals(1,jniCall.count)
+    fun testSetUserFromJni() {
+        val set = jniCall.setUserFromJni()
+        assert(set)
+
+        val user = jniCall.user
+        assertEquals(user.name,"Alice From JNI !!")
     }
 
-    @Test
-    fun testCallSayHiFromJni(){
-        jniCall.callSayHiFromJni()
-    }
-    
-    @Test
-    fun testReadUserFromJni() {
-        val user= User("Alice")
-        jniCall.readUserFromJni(user)
-    }
 }

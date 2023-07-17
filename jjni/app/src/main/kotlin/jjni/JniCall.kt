@@ -5,27 +5,12 @@ object JniCall {
         System.load("/home/codin/java/lnjni/rjni/target/debug/librjni.so")
     }
 
-    var count = 0
-    val user: User
-        get() = getUserFromJni()
-
-    external fun incCountFromJni()
-    external fun callIncCountFromJni()
-    external fun readUserFromJni(user: User)
-    private external fun getUserFromJni(): User
-
-    fun incCount() {
-        incCountFromJni()
-    }
+    lateinit var user: User
 
     @JvmStatic
-    fun sayHi() {
-        println("Hi Jni!!!!")
-    }
+    fun createUser(name: String) = User(name)
 
-    @JvmStatic
-    external fun callSayHiFromJni()
-
+    external fun setUserFromJni(): Boolean
 }
 
 
