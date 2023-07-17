@@ -1,5 +1,6 @@
 use jni::{objects::JClass, JNIEnv};
 
+pub mod array;
 pub mod obj_call;
 pub mod primitive_types;
 
