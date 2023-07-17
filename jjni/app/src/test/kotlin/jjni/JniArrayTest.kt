@@ -21,5 +21,14 @@ class JniArrayTest {
 
         assertContentEquals(newArray, intArrayOf(2, 4, 8))
     }
+
+    @Test
+    fun testMergeStringArray() {
+        val arr1 = arrayOf("A","B","C")
+        val arr2 = arrayOf("a","b","c")
+
+        val arr = JniArray.mergeStringArray(arr1,arr2)
+        println(arr.contentToString())
+    }
 }
 
